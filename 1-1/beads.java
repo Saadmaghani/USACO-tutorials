@@ -13,76 +13,66 @@ class beads{
 		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("beads.out")));
 	
 		int N = Integer.parseInt(in.readLine());
-		String beeaads = in.readLine();
+		StringBuilder sb = new StringBuilder(in.readLine());
 
 		/*
-			first method will be the "dash" method. count number of adjacent same coloured beads and put in array. first go from L->R then R->L 
-			and see which two adjacent "dashes" are the largest and thus form the most number of beads
-			DOESNT WORK. but close. problem of: rwbwrwbwr comes
+			second method is very simple 
+			okay so
+
+			rwbwrwbwr
+			it becomes
+			0: rwbwrwbwr and rwbwrwbwr
+			1: wbwrwbwrr and rrwbwrwbw
+			2: 
+
 		*/
+		int lr = count(sb.toString());
+		int rl = count(sb.reverse().toString());
+		int highestAdded = rl+lr;
+		sb.reverse();
 
-		int[] dashLR = doIT(N,beeaads);
-		int[] dashRL = doIT(N,new StringBuilder(beeaads).reverse().toString());
-
-		for(int i=0;i<N;i++){
-			System.out.print(dashLR[i]+" ");
-		}
-		System.out.println();
-		for(int i=0;i<N;i++){
-			System.out.print(dashRL[i]+" ");
-		}
-		
-		int highestAdjDash = 0;
-		for(int i=0;i<N-1;i++){
-			int lr = dashLR[i] + dashLR[i+1];
-			int rl = dashRL[i] + dashRL[i+1];
-
-			lr = (rl>lr) ? rl:lr;
-			highestAdjDash = (highestAdjDash>lr)? highestAdjDash: lr;
-		}
-
-		out.println(highestAdjDash);
-		out.close();
-	}
-
-	public static int[] doIT(int n, String beeads){
-		int[] dashArray = new int[n];
-		int dashIndex = 0;
-
-		char prevColour = beeads.charAt(0);
-		char firstColour='w';   
-		dashArray[dashIndex]++;
-		for(int i=1;i<n;i++){                 
-			switch(beeads.charAt(i)){
-				case 'w':
-					dashArray[dashIndex]++;
+		for(int i=1;i<N;i++){
+			lr = count(sb.append(sb.charAt(0)).deleteCharAt(0).toString());
+			rl = count(sb.reverse().toString());
+			sb.reverse();
+			highestAdded = ((rl+lr) > highestAdded)? rl+lr:highestAdded;
+			if (highestAdded>=N){
+				highestAdded=N;
 				break;
-				case 'r':
-					if(prevColour=='b'){
-						dashIndex++;
-						dashArray[dashIndex]++;
-						if(dashIndex==1) firstColour='b';
-					}else{
-						dashArray[dashIndex]++;
-					}
-					prevColour='r';
-				break;
-				case 'b':
-					if(prevColour=='r'){
-							dashIndex++;
-							dashArray[dashIndex]++;
-							if(dashIndex==1) firstColour='r';
-					}else{
-						dashArray[dashIndex]++;
-					}
-					prevColour='b';
 			}
 		}
-
-		if(prevColour == firstColour){
-			dashArray[0]+=dashArray[dashIndex];
-			dashArray[dashIndex]=0;
+		out.println(highestAdded);
+		out.close();
+	}
+	public static int count(String beadss){
+		char colour = beadss.charAt(0);
+		int count =1;
+		for(int i=1;i<beadss.length();i++){
+			switch(beadss.charAt(i)){
+				case 'r':
+					if(colour=='b'){
+						return count;
+					}else if(colour=='w'){
+						count++;
+						colour='r';
+					}else{
+						count++;
+					}
+				break;
+				case 'b':
+					if(colour=='r'){
+						return count;
+					}else if(colour=='w'){
+						count++;
+						colour='b';
+					}else{
+						count++;
+					}
+				break;
+				case 'w':
+					count++;
+			}
 		}
-		return dashArray;
+		return count;
 	}
 }
