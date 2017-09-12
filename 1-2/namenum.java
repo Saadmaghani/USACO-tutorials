@@ -27,9 +27,9 @@ class namenum{
 		int i=0;
 		String w;
 		words = new String[4650];
-		while((w = dict.readLine())!=null) words[i++]=w;
-		
-		char[] sNo = in.readLine().toCharArray();
+		String sNo = in.readLine();
+		while((w = dict.readLine())!=null) if(w.length()==sNo.length() && w.charAt(0)!='Z') words[i++]=w;	
+		words[i]="Z";
 
 		hm = new HashMap<Character,char[]>();
 		hm.put('2',new char[]{'A','B','C'});
@@ -42,7 +42,7 @@ class namenum{
 		hm.put('9',new char[]{'W','X','Y'});
 
 		ArrayList<String> list=new ArrayList<String>();
-		int asd = recursive(new String(sNo), sNo, 0, list);
+		int asd = recursive(sNo, sNo.toCharArray(), 0, list);
 
 		if(list.isEmpty()){
 			out.println("NONE");
@@ -74,7 +74,7 @@ class namenum{
 		int i=0;
 		while(!found){
 			readWord = words[i];
-			if((int)word.charAt(0) <(int)readWord.charAt(0) || (int)readWord.charAt(0)==90) break;
+			if((int)word.charAt(0) <(int)readWord.charAt(0) || (int)readWord.charAt(0)==90 ||readWord=="Z") break;
 			if(word.equals(readWord)) found = true;
 			i++;
 		}
