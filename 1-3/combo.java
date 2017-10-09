@@ -54,25 +54,4 @@ class combo{
 			}
 		} 
 	}
-
-
-
-
-
-
-
-/*
-
-	static void solve(int N, int[] lStart, Set<String> combos){
-		for(int a = lStart[0]; a != (lStart[0] +4+N)%N +1 ; a = (a+N)%N +1){
-			for(int b = lStart[1]; b != (lStart[1] +4+N)%N +1 ; b = (b+N)%N +1){
-				for(int c = lStart[2]; c != (lStart[2] +4+N)%N +1 ; c = (c+N)%N +1){
-						combos.add(""+a+b+c);
-						System.out.println(""+a+b+c);
-				}
-			}		
-		} 
-	}
-
-*/
 }
