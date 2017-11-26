@@ -75,7 +75,8 @@ class milk2{
 		}
 
 		for(int i=0; i<chainL-1;i++){
-			if(longn1 < chains.get(i+1)[0]-chains.get(i)[1]) longn1= chains.get(i+1)[0]-chains.get(i)[1];
+			if(longn1 < chains.get(i+1)[0]-chains.get(i)[1]) 
+				longn1= chains.get(i+1)[0]-chains.get(i)[1];
 		}
 
 		out.println(long1 + " "+longn1);
