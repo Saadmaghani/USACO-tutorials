@@ -14,7 +14,7 @@ class ariprog{
 		BufferedReader in = new BufferedReader(new FileReader("ariprog.in"));
 		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("ariprog.out")));
 
-		SortedSet<Integer> set = new TreeSet<Integer>();
+		HashSet<Integer> set = new HashSet<Integer>();
 		int N = Integer.parseInt(in.readLine());
 		int M = Integer.parseInt(in.readLine());
 		for(int p=0; p<=M; p++){
@@ -24,21 +24,19 @@ class ariprog{
 			}
 		}
 
-//		System.out.println(set.size());
-
-		int high = set.last();
+		int high = 2*M*M;
 		int maxInd = set.size()-N+1;
 		boolean found = false;
+		ArrayList<Integer> aList = new ArrayList<Integer>(set);
+		Collections.sort(aList);
+		
 		for(int b=1; b <= (high/(N-1)); b++){
-			
-			int ind = 0;
-			Iterator it = set.iterator();
-			while(it.hasNext()){
-				int a = (Integer) it.next();	
-				if(((N-1)*b +a) <=high && ind++ < maxInd ){
+			for(int i=0; i<aList.size(); i++){
+				int a = aList.get(i);	
+				if(((N-1)*b +a) <=high && i < maxInd ){
 					boolean seqWhole = true;
-					for(int i=1; i<(N-1); i++){
-						if(!set.contains(a+i*b)){
+					for(int j=1; j<N; j++){
+						if(!set.contains(a+j*b)){
 							seqWhole=false;
 							break;
 						}
@@ -47,9 +45,7 @@ class ariprog{
 						found = true;
 						out.println(a+" "+b);
 					}
-				}else{
-					break;
-				}
+				}else break;
 			}	
 		}
 
