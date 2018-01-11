@@ -32,8 +32,8 @@ class ariprog{
 		
 		for(int b=1; b <= (high/(N-1)); b++){
 			for(int i=0; i<aList.size(); i++){
-				int a = aList.get(i);	
-				if(((N-1)*b +a) <=high && i < maxInd ){
+				int a = aList.get(i);
+				if( ((N-1)*b +a)<=high && i < maxInd ){
 					boolean seqWhole = true;
 					for(int j=1; j<N; j++){
 						if(!set.contains(a+j*b)){
@@ -48,7 +48,7 @@ class ariprog{
 				}else break;
 			}	
 		}
-
+	
 		if(!found) out.println("NONE");
 		out.close();
 	}
